@@ -107,7 +107,7 @@ read_frame(#media_info{frames = Frames} = MediaInfo, Id) ->
   
 
 read_data(#media_info{device = IoDev} = MediaInfo, Offset, Size) ->
-  case file:pread(IoDev, Offset, Size) of
+  case http_file:pread(IoDev, Offset, Size) of
     {ok, Data} ->
       {ok, Data, MediaInfo};
     Else -> Else
@@ -178,7 +178,7 @@ init(MediaInfo, Pos) ->
       init(MediaInfo, Offset);
     {atom, AtomName, Offset, Length} -> 
       ?D({"Root atom", AtomName, Length}),
-      {ok, AtomData} = file:pread(Device, Offset, Length),
+      {ok, AtomData} = http_file:pread(Device, Offset, Length),
       NewInfo = case ems:respond_to(?MODULE, AtomName, 2) of
         true -> ?MODULE:AtomName(AtomData, MediaInfo);
         false -> ?D({"Unknown atom", AtomName}), MediaInfo
@@ -187,7 +187,7 @@ init(MediaInfo, Pos) ->
   end.
 
 next_atom(#media_info{device = Device}, Pos) ->
-  case file:pread(Device, Pos, 8) of
+  case http_file:pread(Device, Pos, 8) of
     {ok, <<AtomLength:32, AtomName/binary>>} when AtomLength >= 8 ->
       % ?D({"Atom", binary_to_atom(AtomName, latin1), Pos, AtomLength}),
       {atom, binary_to_atom(AtomName, utf8), Pos + 8, AtomLength - 8};

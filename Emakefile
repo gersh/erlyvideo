@@ -18,6 +18,7 @@
 {"lib/erlyvideo/src/*", [{outdir, "lib/erlyvideo/ebin"}, {i, "lib/erlyvideo/include"}]}.
 {"lib/mpegts/src/*", [{outdir, "lib/mpegts/ebin"}, {i, "lib/mpegts/include"}]}.
 {"lib/shoutcast/src/*", [{outdir, "lib/shoutcast/ebin"}, {i, "lib/shoutcast/include"}]}.
+{"lib/http_file/src/*", [{outdir, "lib/http_file/ebin"}, {i, "lib/http_file/include"}]}.
 {"deps/amf/src/*", [{outdir, "deps/amf/ebin"}, {i, "deps/amf/src"}]}.
 {"deps/rtmp/src/*", [{outdir, "deps/rtmp/ebin"}, {i, "deps/rtmp/src"}]}.
 {"deps/log4erl/src/*", [{outdir, "deps/log4erl/ebin"}, {i, "deps/log4erl/include"}]}.

@@ -54,6 +54,7 @@
 %%--------------------------------------------------------------------
 start() -> 
 	io:format("Starting ErlMedia ...~n"),
+	inets:start(),
   application:start(crypto),
   application:start(rtsp),
   application:start(rtmp),

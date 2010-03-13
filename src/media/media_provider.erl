@@ -266,15 +266,16 @@ detect_rtsp(Host, Name) ->
   end.
 
 detect_http(Host, Name) ->
-  {ok, Re} = re:compile("http://(.*)"),
-  case re:run(Name, Re) of
-    {match, _Captured} -> [{type, http}];
-    _ -> detect_file(Host, Name)
-  end.
+  detect_file(Host, Name).
+  % {ok, Re} = re:compile("http://(.*)"),
+  % case re:run(Name, Re) of
+  %   {match, _Captured} -> [{type, http}];
+  %   _ -> detect_file(Host, Name)
+  % end.
 
 detect_file(Host, Name) ->
   case check_path(Host, Name) of
-    true -> [{type, file}];
+    true -> [{type, file}, {url, Name}];
     _ ->
       case check_path(Host, <<Name/binary, ".flv">>) of
         true -> [{type, file}, {url, <<Name/binary, ".flv">>}];
@@ -317,10 +318,11 @@ check_path(Host, Name) when is_binary(Name) ->
   check_path(Host, binary_to_list(Name));
 
 check_path(Host, Name) ->
-  case file_play:file_dir(Host) of
-    undefined -> false;
-    Dir -> filelib:is_regular(filename:join([Dir, Name]))
-  end.
+  true.
+  % case file_play:file_dir(Host) of
+  %   undefined -> false;
+  %   Dir -> filelib:is_regular(filename:join([Dir, Name]))
+  % end.
 
 %%-------------------------------------------------------------------------
 %% @spec (Msg, State) ->{noreply, State}          |

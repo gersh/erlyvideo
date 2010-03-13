@@ -185,8 +185,9 @@ open_file(Name, Host) when is_binary(Name) ->
   open_file(binary_to_list(Name), Host);
   
 open_file(Name, Host) ->
-  FileName = filename:join([file_play:file_dir(Host), Name]), 
-	{ok, Device} = file:open(FileName, [read, binary, {read_ahead, 100000}, raw]),
+  % FileName = filename:join([file_play:file_dir(Host), Name]), 
+  FileName = Name,
+	{ok, Device} = http_file:open(FileName, [read, binary, {read_ahead, 100000}, raw, {cache_file, "zzz.mp4"}]),
 	FileFormat = file_play:file_format(FileName),
 	MediaInfo = #media_info{
 	  device = Device,
